@@ -171,7 +171,8 @@ AIR8_BATTERY_TYPE_MAP = {
 # Members:
 #   - "Air 8" (single channel, 1S-8S)
 #   - "K2 Air" (two independent channels, 1S-6S each, parallel mode 1S-12S)
-BALANCE_CHARGER_MODELS = frozenset({"Air 8", "K2 Air"})
+#   - "K4" (two independent channels 1S-8S each)
+BALANCE_CHARGER_MODELS = frozenset({"Air 8", "K2 Air", "K4"})
 
 # Manufacturer data company ID (ISDT)
 ISDT_MANUFACTURER_ID = 43962  # 0xABBA
@@ -225,6 +226,7 @@ MODEL_CHANNEL_COUNT_MAP: dict[str, int] = {
     "A8 Air": 8,  # Channels 0-7
     "A4 Air": 4,
     "K2 Air": 2,  # Two-slot round-cell charger
+    "K4": 2,      # Two-slot balance charger
     "Air 8": 1,   # Single LiPo pack port (up to 6 cells on one channel)
     # Default for most chargers is 6 channels
 }
