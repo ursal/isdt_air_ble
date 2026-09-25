@@ -172,7 +172,9 @@ AIR8_BATTERY_TYPE_MAP = {
 #   - "Air 8" (single channel, 1S-8S)
 #   - "K2 Air" (two independent channels, 1S-6S each, parallel mode 1S-12S)
 #   - "K4" (two independent channels 1S-8S each)
-BALANCE_CHARGER_MODELS = frozenset({"Air 8", "K2 Air", "K4"})
+#   - "NP2 Air" (two independent camera battery channels)
+#   - "LP2 Air" (two independent camera battery channels)
+BALANCE_CHARGER_MODELS = frozenset({"Air 8", "K2 Air", "K4", "NP2 Air", "LP2 Air"})
 
 # Manufacturer data company ID (ISDT)
 ISDT_MANUFACTURER_ID = 43962  # 0xABBA
@@ -181,12 +183,14 @@ ISDT_MANUFACTURER_ID = 43962  # 0xABBA
 DEVICE_MODEL_MAP = {
     "01010000": "NP2 Air",
     "01020000": "LP2 Air",
-    "01030000": "Air 8",
-    "01040000": "K2 Air",
+    "01030000": "C4 Air",
+    "01040000": "C4 EVO",
     "01050000": "608PD",
     "01060000": "K4",
     "01070000": "C4 Air",
     "01080000": "Power 200",
+    "01090000": "Air 8",
+    "010a0000": "K2 Air",
     "010d0000": "Power 200H",
     "010e0000": "Power 200X",
     "010f00a8": "A8 Air",
@@ -227,6 +231,8 @@ MODEL_CHANNEL_COUNT_MAP: dict[str, int] = {
     "A4 Air": 4,
     "K2 Air": 2,  # Two-slot round-cell charger
     "K4": 2,      # Two-slot balance charger
+    "NP2 Air": 2, # Two-slot camera battery charger
+    "LP2 Air": 2, # Two-slot camera battery charger
     "Air 8": 1,   # Single LiPo pack port (up to 6 cells on one channel)
     # Default for most chargers is 6 channels
 }
