@@ -16,6 +16,14 @@ from isdt_air_ble.const import detect_model_from_mfg_data
 # --- Known device IDs ---------------------------------------------------------
 
 
+def test_k4_id_maps_to_k4():
+    """K4 advertisement with ID 01010000 or 01060000."""
+    mfg1 = bytes.fromhex("affa01010000000000000000000000000000")
+    assert detect_model_from_mfg_data(mfg1) == "K4"
+    mfg2 = bytes.fromhex("affa01060000000000000000000000000000")
+    assert detect_model_from_mfg_data(mfg2) == "K4"
+
+
 def test_air8_id_maps_to_air8():
     """TRES9000's Air 8 advertisement (issue #2)."""
     mfg = bytes.fromhex("affa01030000200000000000000000000000ff")

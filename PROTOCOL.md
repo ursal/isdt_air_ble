@@ -302,7 +302,7 @@ The device model is identified from bytes 2–5 of the manufacturer data payload
 
 | Bytes [2:6] | Model |
 |-------------|-------|
-| `01010000` | NP2 Air |
+| `01010000` | K4 |
 | `01020000` | LP2 Air |
 | `01030000` | C4 Air |
 | `01040000` | C4 EVO |

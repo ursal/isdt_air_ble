@@ -181,7 +181,7 @@ ISDT_MANUFACTURER_ID = 43962  # 0xABBA
 
 # Device model lookup from manufacturer_data bytes [2:6]
 DEVICE_MODEL_MAP = {
-    "01010000": "NP2 Air",
+    "01010000": "K4",
     "01020000": "LP2 Air",
     "01030000": "C4 Air",
     "01040000": "C4 EVO",
@@ -208,6 +208,7 @@ DEVICE_MODEL_MAP = {
     "LP2Air": "LP2 Air",
     "A4Air": "A4 Air",
     "A8Air": "A8 Air",
+    "K4": "K4",
 }
 
 # Map model names to device types
@@ -481,6 +482,7 @@ MODEL_OTA_NAME_MAP: dict[str, str] = {
     "C4 EVO": "C4Air",
     "A4 Air": "A4Air",
     "A8 Air": "A8Air",
+    "K4": "K4",
     "NP2 Air": "NP2Air",
     "LP2 Air": "LP2Air",
     "MASS2": "MASS2",
