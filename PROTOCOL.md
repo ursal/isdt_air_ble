@@ -104,8 +104,10 @@ Offset  Length  Field
 2       1       HW version minor
 3       1       FW version major
 4       1       FW version minor
-5       8       Device ID (uint64, little-endian) → serial number
+5       8       Role tag ("CENTPERI") / Device ID
 ```
+
+*Note on serial number / PN:* In all tested ISDT chargers and adapters, bytes 5..12 contain the static ASCII string `"CENTPERI"` (`0x43 0x45 0x4E 0x54 0x50 0x45 0x52 0x49`, or `0x49524550544E4543` in LE uint64). This is an internal BLE role/firmware constant rather than a unique hardware serial number or device PN (e.g. `260702100000-00000`). The integration filters out this static tag so that devices do not report a fake identical serial number.
 
 ## Response Frame Format
 

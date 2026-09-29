@@ -429,11 +429,18 @@ def parse_ir(data: bytes) -> dict:
     }
 
 
-def parse_hardware_info(data: bytes) -> tuple[str, str, str] | None:
+def parse_hardware_info(data: bytes) -> tuple[str, str, str | None] | None:
     """Parse HardwareInfoResp (CMD RESP_HARDWARE_INFO) received on characteristic AF02.
 
     The CMD byte may be at position 0 (no 0x31 frame header) or 1 (with 0x31 prefix).
-    Layout after CMD: hw_main (1), hw_sub (1), sw_main (1), sw_sub (1), device_id (8 LE).
+    Layout after CMD: hw_main (1), hw_sub (1), sw_main (1), sw_sub (1), optional payload (8 bytes).
+
+    Note on serial numbers:
+      ISDT firmware fills bytes 5..13 with the static ASCII string b"CENTPERI"
+      (or 0x49524550544E4543 in little-endian uint64), which is an internal
+      role/firmware constant, not a device serial number. Real product numbers
+      (PN) like "260702100000-00000" are not transmitted over BLE in this response.
+      When the payload is "CENTPERI" or zeroed/dummy bytes, serial_number is None.
 
     Returns:
         (hw_version, sw_version, serial_number) or None on error.
@@ -453,17 +460,22 @@ def parse_hardware_info(data: bytes) -> tuple[str, str, str] | None:
         )
         return None
 
-    needed = offset + 13  # CMD + 4 version bytes + 8 device-ID bytes
-    if len(data) < needed:
+    if len(data) < offset + 5:
         _LOGGER.warning(
-            "HardwareInfoResp too short: %d bytes (need %d)", len(data), needed
+            "HardwareInfoResp too short for version bytes: %d bytes", len(data)
         )
         return None
 
-    hw_version    = f"{data[offset + 1]}.{data[offset + 2]}"
-    sw_version    = f"{data[offset + 3]}.{data[offset + 4]}"
-    device_id     = int.from_bytes(data[offset + 5 : offset + 13], "little")
-    serial_number = f"{device_id:016X}"
+    hw_version = f"{data[offset + 1]}.{data[offset + 2]}"
+    sw_version = f"{data[offset + 3]}.{data[offset + 4]}"
+
+    serial_number: str | None = None
+    if len(data) >= offset + 13:
+        raw_id = data[offset + 5 : offset + 13]
+        if raw_id not in (b"CENTPERI", b"\x00" * 8, b"\xff" * 8):
+            device_id = int.from_bytes(raw_id, "little")
+            if device_id != 0:
+                serial_number = f"{device_id:016X}"
 
     return hw_version, sw_version, serial_number
 

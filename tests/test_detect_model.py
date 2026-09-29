@@ -26,13 +26,13 @@ def test_k4_id_maps_to_k4():
 
 def test_air8_id_maps_to_air8():
     """TRES9000's Air 8 advertisement (issue #2)."""
-    mfg = bytes.fromhex("affa01030000200000000000000000000000ff")
+    mfg = bytes.fromhex("affa01090000200000000000000000000000ff")
     assert detect_model_from_mfg_data(mfg) == "Air 8"
 
 
 def test_k2air_id_maps_to_k2air():
     """Mngnt's K2 Air advertisement (issue #3)."""
-    mfg = bytes.fromhex("affa010400004b32416972000000000000000000")
+    mfg = bytes.fromhex("affa010a00004b32416972000000000000000000")
     assert detect_model_from_mfg_data(mfg) == "K2 Air"
 
 
